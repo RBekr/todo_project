@@ -3,7 +3,7 @@ from django.urls import reverse
 
 register = template.Library()
 
-@register.filter('input_type')
+@register.filter(name='input_type')
 def input_type(ob):
     '''
     Extract form field type
@@ -13,7 +13,7 @@ def input_type(ob):
     return ob.field.widget.__class__.__name__
 
 
-@register.filter(name='add_classes')
+@register.filter(name='addclass')
 def add_classes(value, arg):
     '''
     Add provided classes to form field
