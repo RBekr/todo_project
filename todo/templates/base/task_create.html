@@ -14,9 +14,10 @@
         <ul>
         {% for field in form %}
             <p>
-            {{ field|addclass:'form-control' }}
-            <label class="form-label" for={{ field|safe }}>{{field.label}}</label>
-            
+            <small id="id_text-help" class="form-text text-muted">
+                {{field.help_text|safe}}
+            </small>   
+            {{ field }}
             </p>
         {% endfor %}
         </ul>

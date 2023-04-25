@@ -12,11 +12,17 @@ _Используемые Технологии_
 ## Setup
 ```
 $ git clone https://github.com/RBekr/todo_project.git
-$ cd todo_project/infra
+$ cd todo_project/todo_infra
 $ docker-compose up --build -d
 $ docker-compose exec web python manage.py makemigrations
 $ docker-compose exec web python manage.py migrate
 $ docker-compose exec web python manage.py createsuperuser
 $ docker-compose exec web python manage.py collectstatic --no-input
 $ docker-compose exec web python manage.py loaddata fixtures.json
+```
+
+## Сохранить БД
+
+```
+$ docker-compose exec web python manage.py dumpdata > fixtures.json
 ```

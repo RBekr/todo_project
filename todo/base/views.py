@@ -1,9 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse_lazy, reverse
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, FormView
 
 from .models import Task
-from .forms import TaskForm
+from .forms import TaskCompleteForm, TaskForm
 from .utils import TaskRequiredMixin
 
 class TaskList(ListView):
@@ -28,6 +28,18 @@ class TaskList(ListView):
         return context
 
 
+class TaskCompleteView(FormView):
+    form_class = TaskCompleteForm
+    success_url = reverse_lazy('base:tasks')
+    pk_url_kwarg = 'pk'
+
+    def form_valid(self, form):
+        task = get_object_or_404(Task, id=self.kwargs['pk'])
+        task.complete = not task.complete
+        task.save()
+        return super().form_valid(form)
+
+
 class TaskDetail(TaskRequiredMixin, DetailView):
     model = Task
     template_name = 'base/task_detail.html'
@@ -38,9 +50,7 @@ class TaskDetail(TaskRequiredMixin, DetailView):
 class TaskCreate(TaskRequiredMixin, CreateView):
     form_class = TaskForm
     template_name = 'base/task_create.html'
-
-    def get_success_url(self) -> str:
-        return reverse_lazy('base:task_detail', kwargs={'pk': self.object.pk})
+    success_url = reverse_lazy('base:tasks')
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -49,13 +59,10 @@ class TaskCreate(TaskRequiredMixin, CreateView):
 
 class TaskUpdate(TaskRequiredMixin, UpdateView):
     model = Task
-    fields = ('title', 'description', 'complete')
+    form_class = TaskForm
     template_name = 'base/task_create.html'
     pk_url_kwarg = 'pk'
-
-    def get_success_url(self) -> str:
-        return reverse_lazy('base:task_detail', kwargs={'pk': self.object.pk})
-
+    success_url = reverse_lazy('base:tasks')
 
 class TaskDelete(TaskRequiredMixin, DeleteView):
     model = Task

@@ -13,21 +13,31 @@
 <table class="table table-striped">
 <tbody>
 <div class="overflow-auto">
-{% for task in tasks %}
-<tr>
-    <li class="list-group-item d-flex align-items-center border-0 mb-2 rounded"
-    style="background-color: #f4f6f7;">
-        <td class="card-text link-unstyled position-relative">
-            {{task}}
-            <a href="{% url 'base:task_detail' task.id %}" class=" stretched-link"> </a>
-        </td>
-        <th><a href="{% url 'base:task_update' task.id %}" > <i class="bi bi-pencil-fill text-info m-3"></i></a> </th>
-        <td><a href="{% url 'base:task_delete' task.id %}"> <i class="bi bi-trash-fill text-danger m-3"></i></a> </td>
-    </li>
-    {% empty %}
-        <p>No items in list</p>
-</tr>
-{% endfor %}
+    {% for task in tasks %}
+    <tr>
+        <li class="list-group-item d-flex align-items-center border-0 mb-2 rounded"
+        style="background-color: #f4f6f7;">
+            {% if task.complete %}
+            <td class="card-text link-unstyled position-relative" style="text-decoration: line-through;">
+            {% else %}
+            <td class="card-text link-unstyled position-relative">
+            {% endif %}
+                {{ task }}
+                <a href="{% url 'base:task_detail' task.id %}" class=" stretched-link"> </a>
+            </td>
+            <th><a href="{% url 'base:task_update' task.id %}" > <i class="bi bi-pencil-fill text-info m-3"></i></a> </th>
+            <td><a href="{% url 'base:task_delete' task.id %}"> <i class="bi bi-trash-fill text-danger m-3"></i></a> </td>
+            <td>
+                <form method="POST" action="{% url 'base:task_complete' task.id %}">
+                    {% csrf_token %}
+                    <input type="checkbox" name="complete" id="{{ task.id }}" {% if task.complete %}checked{% endif %} onclick="this.form.submit()">
+                </form>
+            </td>
+        </li>
+        {% empty %}
+            <p>No items in list</p>
+    </tr>
+    {% endfor %}
 </div>
 </tbody>
 </table>
