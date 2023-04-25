@@ -1,10 +1,18 @@
-# todo_project
-TODO LIST
+<<<<<<< HEAD
+
+# Todo project
+TODO LIST - Классическое MVT web приложения, позволяющее создавать, редактировать и удалять задачи. 
+
+_Используемые Технологии_
+* Django==2.2.16
+* Python 3
+* CSS
+* HTML
 
 ## Setup
 ```
-$ git clone https://github.com/RBekr/api_yamdb.git
-$ cd infra_sp2/infra
+$ git clone https://github.com/RBekr/todo_project.git
+$ cd todo_project/infra
 $ docker-compose up --build -d
 $ docker-compose exec web python manage.py makemigrations
 $ docker-compose exec web python manage.py migrate
