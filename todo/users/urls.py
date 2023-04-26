@@ -4,7 +4,7 @@ from django.contrib.auth.views import (PasswordResetDoneView,
                                        PasswordResetConfirmView,
                                        PasswordResetCompleteView)
 
-from .views import SignUpView, UserLoginView, logout_user
+from .views import SignUpView, UserLoginView, PasswordsChangeView, logout_user, password_reset
 
 app_name = 'users'
 
@@ -16,18 +16,16 @@ urlpatterns = [
     path('login/',
          UserLoginView.as_view(),
          name='login'),
-]
-'''
     path('password_change/form/',
-         views.PasswordsChangeView.
-         as_view(template_name='users/password_change_form.html'),
-         name='password_change_form'),
+          PasswordsChangeView.
+          as_view(template_name='users/password_change_form.html'),
+          name='password_change_form'),
     path('password_change/done/',
          PasswordChangeDoneView.
          as_view(template_name='users/password_change_done.html'),
          name='password_change_done'),
     path('password_reset/form/',
-         views.password_reset,
+         password_reset,
          name='password_reset_form'),
     path('password_reset/done/',
          PasswordResetDoneView.
@@ -41,6 +39,5 @@ urlpatterns = [
          PasswordResetCompleteView.
          as_view(template_name='users/password_reset_complete.html'),
          name='password_reset_complete'),
-'''
 
-
+     ]

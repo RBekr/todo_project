@@ -1,13 +1,15 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white ">
     <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarExample01">
-        
+            <span> <a href="{% url 'base:tasks' %}" > <i class="bi bi-house-door-fill bi-2xl text-warning" style="font-size: 30px"></i></a> </span>
             {% if request.user.is_authenticated %}
             <div class="navbar-nav me-auto mb-2 mb-lg-0">
                 <span class="navbar-text text-danger"> {{request.user }} </span>
             </div>
             <div class="navbar-nav">
                 <li class="nav-item"> <a class="nav-link" href="{% url 'users:logout' %}">Logout</a> </li>
+                <li class="nav-item"> <a class="nav-link" href="{% url 'users:password_change_form' %}">Change Pw</a> </li>
+                <li class="nav-item"> <a class="nav-link" href="{% url 'users:password_reset_form' %}">Reset Pw</a> </li>
             </div>
             {% else %}
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
